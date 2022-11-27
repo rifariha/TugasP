@@ -1,34 +1,29 @@
-import connection
 import filtering
-
-
-def import_data(df):
-    conn = connection.connect()
-
-    connection.create_database(conn)
-    connection.create_table(conn)
-
-    cursor = connection.select_database(conn, "football_player")
-
-    cursor.execute("select count(*) from players")
-
-    jumlah = 0
-    for row in cursor:
-        jumlah = row[0]
-        break
-
-    if jumlah <= 0:
-        sql = """insert into `players` (name, age, nationality,born_year, squad) values (%s, %s, %s, %s, %s)"""
-        for i in df.index:
-            cursor.execute(sql, (df['name'][i], df['age'][i], df['nationality'][i], df['born_year'][i], df['squad'][i]))
-            conn.commit()
-
-    conn.close()
+import transaction
 
 
 def main():
     df = filtering.result('2022_2023_Football_Player_Stats.csv')
-    import_data(df)
+    transaction.import_data(df)
+    print("========================================")
+    print("Choose action you want (type the number)")
+    print("1. Insert New data")
+    print("2. Show data")
+    print("3. Update data")
+    print("4. Delete data\n")
+
+    val = input("Give your action: ")
+
+    if val == "1":
+        transaction.insert_new_data()
+    elif val == "2":
+        transaction.show_option()
+    elif val == "3":
+        transaction.update_data()
+    elif val == "4":
+        transaction.delete_data()
+    else:
+        print("Option not available")
 
 
 if __name__ == '__main__':
