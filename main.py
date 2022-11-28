@@ -1,3 +1,7 @@
+# Nama          : Ridho Fariha
+# NIM           : 227056014
+# Matakuliah    : Pemrograman untuk data science dan kecerdasan buatan
+
 import filtering
 import transaction
 
