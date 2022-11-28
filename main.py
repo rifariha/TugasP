@@ -3,8 +3,12 @@ import transaction
 
 
 def main():
-    df = filtering.result('2022_2023_Football_Player_Stats.csv')
-    transaction.import_data(df)
+    trx = transaction.Transaction()
+    filters = filtering.Filtering()
+
+    df = filters.result('2022_2023_Football_Player_Stats.csv')
+    trx.import_data(df)
+
     print("========================================")
     print("Choose action you want (type the number)")
     print("1. Insert New data")
@@ -15,13 +19,13 @@ def main():
     val = input("Give your action: ")
 
     if val == "1":
-        transaction.insert_new_data()
+        trx.insert_new_data()
     elif val == "2":
-        transaction.show_option()
+        trx.show_option()
     elif val == "3":
-        transaction.update_data()
+        trx.update_data()
     elif val == "4":
-        transaction.delete_data()
+        trx.delete_data()
     else:
         print("Option not available")
 
